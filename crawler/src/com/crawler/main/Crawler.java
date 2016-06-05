@@ -13,7 +13,7 @@ public class Crawler {
 	
 	public static String sendGet(String url){
 
-			//å­˜å‚¨å¾—åˆ°çš„å†…å®¹
+			//´æ´¢µÃµ½µÄÄÚÈİ
 			String result = "";
 			
 			BufferedReader in = null;
@@ -21,20 +21,20 @@ public class Crawler {
 			try {
 				
 				URL realUrl = new URL(url);
-				//åˆå§‹åŒ–è¿æ¥
+				//³õÊ¼»¯Á¬½Ó
 				URLConnection openConnection = realUrl.openConnection();
-				//å¼€å¯è¿æ¥
+				//¿ªÆôÁ¬½Ó
 				openConnection.connect();
-				//è¯»å–URLçš„å“åº”
+				//¶ÁÈ¡URLµÄÏìÓ¦
 				in  = new BufferedReader(new InputStreamReader(openConnection.getInputStream(),"UTF-8"));
 				
-				//å°†URLçš„å“åº”å­˜å‚¨èµ·æ¥
+				//½«URLµÄÏìÓ¦´æ´¢ÆğÀ´
 				String next = "";
 				while(in.readLine()!=null){
 					result = result + in.readLine();
 				}
 			} catch (Exception e) {
-				System.out.println("è¯·æ±‚å‘ç”Ÿå¼‚å¸¸" + e);
+				System.out.println("ÇëÇó·¢ÉúÒì³£" + e);
 				e.printStackTrace();
 			}finally{
 				if(in != null){
@@ -50,24 +50,24 @@ public class Crawler {
 			return result;
 		
 	}
-	//åˆ©ç”¨æ­£åˆ™è¡¨è¾¾å¼æ‰¾åˆ°æƒ³è¦è·å–çš„å†…å®¹  reult:å†…å®¹ 
+	//ÀûÓÃÕıÔò±í´ïÊ½ÕÒµ½ÏëÒª»ñÈ¡µÄÄÚÈİ  reult:ÄÚÈİ 
 	public static ArrayList<Zhihu> RegexString(String reult){
 		
 		ArrayList<Zhihu> list  = new ArrayList<Zhihu>();
-		/*//åŒ¹é…æ ‡é¢˜
-			// å®šä¹‰æ­£åˆ™
+		/*//Æ¥Åä±êÌâ
+			// ¶¨ÒåÕıÔò
 		  Pattern pattern = Pattern.compile("question_link.+?>(.+?)<");
-		  // å®šä¹‰ä¸€ä¸ªmatcherç”¨æ¥åšåŒ¹é…
+		  // ¶¨ÒåÒ»¸ömatcherÓÃÀ´×öÆ¥Åä
 		  Matcher matcher = pattern.matcher(reult);
 		*/
-		  //åŒ¹é…é“¾æ¥
-			// å®šä¹‰æ­£åˆ™
+		  //Æ¥ÅäÁ´½Ó
+			// ¶¨ÒåÕıÔò
 		  Pattern urlPattern  = Pattern.compile("<h2>.+?question_link.+?href=\"(.+?)\".+?</h2>");
-		  // å®šä¹‰ä¸€ä¸ªmatcherç”¨æ¥åšåŒ¹é…
+		  // ¶¨ÒåÒ»¸ömatcherÓÃÀ´×öÆ¥Åä
 		  Matcher urlmatcher = urlPattern.matcher(reult);
 		  boolean find = urlmatcher.find();
 		  while(find){
-			// å®šä¹‰ä¸€ä¸ªå¯¹è±¡æ¥å­˜å‚¨æŠ“å–åˆ°çš„ä¿¡æ¯
+			// ¶¨ÒåÒ»¸ö¶ÔÏóÀ´´æ´¢×¥È¡µ½µÄĞÅÏ¢
 			   Zhihu zhuhu = new Zhihu(urlmatcher.group(1));
 			//   zhuhu.question = urlmatcher.group(1);
 			   zhuhu.zhihuUrl = "http://www.zhihu.com" + urlmatcher.group(1);
@@ -82,25 +82,25 @@ public class Crawler {
 	}
 	
 	 public static void main(String[] args) {
-		  // å®šä¹‰å³å°†è®¿é—®çš„é“¾æ¥
+		  // ¶¨Òå¼´½«·ÃÎÊµÄÁ´½Ó
 		  String url = "http://www.zhihu.com/explore/recommendations";
 		
-		  // è®¿é—®é“¾æ¥å¹¶è·å–é¡µé¢å†…å®¹
+		  // ·ÃÎÊÁ´½Ó²¢»ñÈ¡Ò³ÃæÄÚÈİ
 		  String result = sendGet(url);
 		  System.out.println(result);
 		
-		  //ä½¿ç”¨æ­£åˆ™åŒ¹é…æƒ³è¦çš„å†…å®¹
+		  //Ê¹ÓÃÕıÔòÆ¥ÅäÏëÒªµÄÄÚÈİ
 		  ArrayList<Zhihu>  imgSrc = RegexString(result);
 		//  ArrayList<String> imgSrc2 = RegexString(result, "post-link.+?>(.+?)<");
 		//  imgSrc.addAll(imgSrc2);
-		  //æ‰“å°ç»“æœ
+		  //´òÓ¡½á¹û
 		  for(int i=0;i<imgSrc.size();i++){
 		  System.out.println(imgSrc.get(i));
 		  }
 		  
 		  for (Zhihu zhihu : imgSrc) { 
 			  WriterInFile.writeIntoFile(zhihu.writeString(), 
-	                    "G:/çŸ¥ä¹_ç¼–è¾‘æ¨è.txt", true); 
+	                    "G:/Öªºõ_±à¼­ÍÆ¼ö.txt", true); 
 	        }  
 
 		//  System.out.println(imgSrc);

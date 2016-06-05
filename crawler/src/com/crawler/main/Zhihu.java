@@ -4,38 +4,38 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class Zhihu {
- public String question;// é—®é¢˜
- public String questionDescription;// é—®é¢˜æè¿°
- public String zhihuUrl;// ç½‘é¡µé“¾æ¥
- public ArrayList<String> answers;// å­˜å‚¨æ‰€æœ‰å›ç­”çš„æ•°ç»„
- // æ„é€ æ–¹æ³•åˆå§‹åŒ–æ•°æ®
+ public String question;// ÎÊÌâ
+ public String questionDescription;// ÎÊÌâÃèÊö
+ public String zhihuUrl;// ÍøÒ³Á´½Ó
+ public ArrayList<String> answers;// ´æ´¢ËùÓĞ»Ø´ğµÄÊı×é
+ // ¹¹Ôì·½·¨³õÊ¼»¯Êı¾İ
  public Zhihu(String url) {
-  // åˆå§‹åŒ–å±æ€§
+  // ³õÊ¼»¯ÊôĞÔ
   question = "";
   questionDescription = "";
   zhihuUrl = "";
   answers = new ArrayList<String>();
-  // åˆ¤æ–­urlæ˜¯å¦åˆæ³•
+  // ÅĞ¶ÏurlÊÇ·ñºÏ·¨
   if (getRealUrl(url)) {
-   System.out.println("æ­£åœ¨æŠ“å–" + zhihuUrl);
-   // æ ¹æ®urlè·å–è¯¥é—®ç­”çš„ç»†èŠ‚
+   System.out.println("ÕıÔÚ×¥È¡" + zhihuUrl);
+   // ¸ù¾İurl»ñÈ¡¸ÃÎÊ´ğµÄÏ¸½Ú
    String content = Crawler.sendGet(zhihuUrl);
    Pattern pattern;
    Matcher matcher;
-   // åŒ¹é…æ ‡é¢˜
+   // Æ¥Åä±êÌâ
    pattern = Pattern.compile("zh-question-title.+?<h2.+?>(.+?)</h2>");
    matcher = pattern.matcher(content);
    if (matcher.find()) {
     question = matcher.group(1);
    }
-   // åŒ¹é…æè¿°
+   // Æ¥ÅäÃèÊö
    pattern = Pattern
      .compile("zh-question-detail.+?<div.+?>(.*?)</div>");
    matcher = pattern.matcher(content);
    if (matcher.find()) {
     questionDescription = matcher.group(1);
    }
-   // åŒ¹é…ç­”æ¡ˆ
+   // Æ¥Åä´ğ°¸
    pattern = Pattern.compile("/answer/content.+?<div.+?>(.*?)</div>");
    matcher = pattern.matcher(content);
    boolean isFind = matcher.find();
@@ -45,15 +45,15 @@ public class Zhihu {
    }
   }
  }
- // æ ¹æ®è‡ªå·±çš„urlæŠ“å–è‡ªå·±çš„é—®é¢˜å’Œæè¿°å’Œç­”æ¡ˆ
+ // ¸ù¾İ×Ô¼ºµÄurl×¥È¡×Ô¼ºµÄÎÊÌâºÍÃèÊöºÍ´ğ°¸
  public boolean getAll() {
   return true;
  }
- // å¤„ç†url
+ // ´¦Àíurl
  boolean getRealUrl(String url) {
-  // å°†http://www.zhihu.com/question/22355264/answer/21102139
-  // è½¬åŒ–æˆhttp://www.zhihu.com/question/22355264
-  // å¦åˆ™ä¸å˜
+  // ½«http://www.zhihu.com/question/22355264/answer/21102139
+  // ×ª»¯³Éhttp://www.zhihu.com/question/22355264
+  // ·ñÔò²»±ä
   Pattern pattern = Pattern.compile("question/(.*?)/");
   Matcher matcher = pattern.matcher(url);
   if (matcher.find()) {
@@ -66,11 +66,11 @@ public class Zhihu {
  
  public String writeString() { 
      String result = ""; 
-     result += "é—®é¢˜ï¼š" + question + "\r\n"; 
-     result += "æè¿°ï¼š" + questionDescription + "\r\n"; 
-     result += "é“¾æ¥ï¼š" + zhihuUrl + "\r\n"; 
+     result += "ÎÊÌâ£º" + question + "\r\n"; 
+     result += "ÃèÊö£º" + questionDescription + "\r\n"; 
+     result += "Á´½Ó£º" + zhihuUrl + "\r\n"; 
      for (int i = 0; i < answers.size(); i++) { 
-         result += "å›ç­”" + i + "ï¼š" + answers.get(i) + "\r\n"; 
+         result += "»Ø´ğ" + i + "£º" + answers.get(i) + "\r\n"; 
          System.out.println(answers.get(i)+"----");
      } 
      result += "\r\n\r\n"; 
@@ -79,7 +79,7 @@ public class Zhihu {
  
  @Override
  public String toString() {
-  return "é—®é¢˜ï¼š" + question + "\n" + "æè¿°ï¼š" + questionDescription + "\n"
-    + "é“¾æ¥ï¼š" + zhihuUrl + "\nå›ç­”ï¼š" + answers.size() + "\n";
+  return "ÎÊÌâ£º" + question + "\n" + "ÃèÊö£º" + questionDescription + "\n"
+    + "Á´½Ó£º" + zhihuUrl + "\n»Ø´ğ£º" + answers.size() + "\n";
  }
 }
