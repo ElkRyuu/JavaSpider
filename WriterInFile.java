@@ -7,13 +7,13 @@ public class WriterInFile {
 	public static boolean writeIntoFile(String content, String filePath, 
             boolean isAppend) { 
         boolean isSuccess = true; 
-        // ¹ıÂËÎÄ¼şÃû 
+        // è¿‡æ»¤æ–‡ä»¶å 
         int index = filePath.lastIndexOf("/"); 
         String dir = filePath.substring(0, index); 
-        // ´´½¨ÎÄ¼şµÄÂ·¾¶ 
+        // åˆ›å»ºæ–‡ä»¶çš„è·¯å¾„ 
         File fileDir = new File(dir); 
         fileDir.mkdirs(); 
-        // ÔÙ´´½¨Â·¾¶ÏÂµÄÎÄ¼ş 
+        // å†åˆ›å»ºè·¯å¾„ä¸‹çš„æ–‡ä»¶ 
         File file = null; 
         try { 
             file = new File(filePath); 
@@ -22,7 +22,7 @@ public class WriterInFile {
             isSuccess = false; 
             e.printStackTrace(); 
         } 
-        // Ğ´ÈëÎÄ¼ş 
+        // å†™å…¥æ–‡ä»¶ 
         FileWriter fileWriter = null; 
         try { 
             fileWriter = new FileWriter(file, isAppend); 
